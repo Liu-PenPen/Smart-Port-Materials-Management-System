@@ -47,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({ className, style }) => {
           <Space size="small" align="center">
             <Text type="secondary">Made with</Text>
             <HeartFilled style={{ color: '#ff4d4f' }} />
-            <Text type="secondary">by 小花花团队</Text>
+            <Text type="secondary">by xiaohuahua</Text>
           </Space>
         </div>
 
@@ -56,8 +56,8 @@ const Footer: React.FC<FooterProps> = ({ className, style }) => {
           <Space size="large" wrap>
             <Space size="small">
               <MailOutlined />
-              <Link href="mailto:contact@xiaohuahua.com">
-                contact@xiaohuahua.com
+              <Link href="mailto:contact@839590955@qq.com">
+                contact@839590955@qq.com
               </Link>
             </Space>
             <Space size="small">
@@ -66,7 +66,7 @@ const Footer: React.FC<FooterProps> = ({ className, style }) => {
             </Space>
             <Space size="small">
               <GithubOutlined />
-              <Link href="https://github.com/xiaohuahua" target="_blank">
+              <Link href="https://github.com/Liu-PenPen/Smart-Port-Materials-Management-System" target="_blank">
                 GitHub
               </Link>
             </Space>
@@ -76,7 +76,7 @@ const Footer: React.FC<FooterProps> = ({ className, style }) => {
         {/* 技术栈信息 */}
         <div className="footer-tech" style={{ marginTop: 12 }}>
           <Text type="secondary" style={{ fontSize: 12 }}>
-            Powered by React + TypeScript + Ant Design + Vite
+            Powered by 小花花团队打造
           </Text>
         </div>
 

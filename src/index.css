@@ -59,18 +59,7 @@ body.compact-mode .ant-card-body {
   padding: 12px;
 }
 
-/* 全屏模式 */
-body.fullscreen-mode {
-  overflow: hidden;
-}
-
-body.fullscreen-mode .ant-layout-sider {
-  display: none;
-}
-
-body.fullscreen-mode .ant-layout {
-  margin-left: 0 !important;
-}
+/* 全屏模式 - 使用浏览器原生全屏API，无需额外CSS样式 */
 
 /* 无动画模式 */
 body.no-animations * {

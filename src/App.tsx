@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Layout, Menu, Avatar, Dropdown, Space, Button, Tooltip } from 'antd'
 import {
@@ -20,7 +20,9 @@ import {
   TrophyOutlined,
   SearchOutlined,
   AccountBookOutlined,
-  SmileTwoTone
+  SmileTwoTone,
+  SkinOutlined
+  
 } from '@ant-design/icons'
 import { useAuthStore } from '@/stores/authStore'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -122,6 +124,40 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     showFooter: true
   })
 
+  // 监听全屏状态变化
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isFullscreen = !!(
+        document.fullscreenElement ||
+        (document as any).webkitFullscreenElement ||
+        (document as any).msFullscreenElement ||
+        (document as any).mozFullScreenElement
+      )
+
+      // 如果全屏状态与配置不一致，更新配置
+      if (isFullscreen !== systemConfig.fullScreenMode) {
+        setSystemConfig(prev => ({
+          ...prev,
+          fullScreenMode: isFullscreen
+        }))
+      }
+    }
+
+    // 添加全屏状态变化监听器
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+    document.addEventListener('msfullscreenchange', handleFullscreenChange)
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange)
+
+    return () => {
+      // 清理监听器
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+      document.removeEventListener('msfullscreenchange', handleFullscreenChange)
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange)
+    }
+  }, [systemConfig.fullScreenMode])
+
   // 处理系统配置变化
   const handleConfigChange = (config: SystemConfig) => {
     setSystemConfig(config)
@@ -166,7 +202,47 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       body.classList.remove('color-weakness')
     }
 
+    // 全屏模式 - 使用浏览器全屏API
+    if (config.fullScreenMode) {
+      enterFullscreen()
+    } else {
+      exitFullscreen()
+    }
+
     // 页脚显示控制已通过条件渲染实现，无需额外处理
+  }
+
+  // 进入全屏模式
+  const enterFullscreen = () => {
+    const element = document.documentElement
+    if (element.requestFullscreen) {
+      element.requestFullscreen()
+    } else if ((element as any).webkitRequestFullscreen) {
+      // Safari
+      (element as any).webkitRequestFullscreen()
+    } else if ((element as any).msRequestFullscreen) {
+      // IE/Edge
+      (element as any).msRequestFullscreen()
+    } else if ((element as any).mozRequestFullScreen) {
+      // Firefox
+      (element as any).mozRequestFullScreen()
+    }
+  }
+
+  // 退出全屏模式
+  const exitFullscreen = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen()
+    } else if ((document as any).webkitExitFullscreen) {
+      // Safari
+      (document as any).webkitExitFullscreen()
+    } else if ((document as any).msExitFullscreen) {
+      // IE/Edge
+      (document as any).msExitFullscreen()
+    } else if ((document as any).mozCancelFullScreen) {
+      // Firefox
+      (document as any).mozCancelFullScreen()
+    }
   }
 
   // 菜单项配置
@@ -358,7 +434,8 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   e.currentTarget.style.background = 'transparent'
                 }}
               >
-                <SmileTwoTone style={{ fontSize: 24 }} />
+                <SkinOutlined style={{ fontSize: 20 }}/>
+                {/* <SmileTwoTone style={{ fontSize: 24 }} /> */}
               </span>
             </Tooltip>
             <Dropdown

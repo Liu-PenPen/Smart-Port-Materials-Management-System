@@ -179,7 +179,9 @@ const SystemConfigDrawer: React.FC<SystemConfigDrawerProps> = ({
         </div>
         
         <div className="config-item">
-          <Text>全屏模式</Text>
+          <div>
+            <Text>全屏模式</Text>
+          </div>
           <Switch
             checked={config.fullScreenMode}
             onChange={(checked) => handleConfigChange('fullScreenMode', checked)}
