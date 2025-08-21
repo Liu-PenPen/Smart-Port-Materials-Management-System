@@ -1,0 +1,231 @@
+/* 页脚组件样式 */
+.app-footer {
+  background: #f0f2f5 !important;
+  border-top: 1px solid #e8e8e8;
+  padding: 24px 16px;
+  margin-top: auto;
+  transition: all 0.3s ease;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-main {
+  font-size: 14px;
+  font-weight: 500;
+  color: #262626;
+}
+
+.footer-subtitle {
+  font-size: 13px;
+}
+
+.footer-contact {
+  font-size: 12px;
+}
+
+.footer-contact .ant-typography {
+  font-size: 12px;
+}
+
+.footer-tech {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.footer-license {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* 暗黑主题适配 */
+body[data-theme="dark"] .app-footer {
+  background: #1f1f1f !important;
+  border-top: 1px solid #303030 !important;
+  color: #ffffff;
+}
+
+body[data-theme="dark"] .footer-main {
+  color: #ffffff;
+}
+
+body[data-theme="dark"] .footer-subtitle .ant-typography {
+  color: #ffffff !important;
+}
+
+body[data-theme="dark"] .footer-contact .ant-typography {
+  color: #ffffff !important;
+}
+
+body[data-theme="dark"] .footer-tech .ant-typography {
+  color: #ffffff !important;
+}
+
+body[data-theme="dark"] .footer-license .ant-typography {
+  color: #ffffff !important;
+}
+
+body[data-theme="dark"] .footer-contact .ant-typography-link {
+  color: #1890ff !important;
+}
+
+body[data-theme="dark"] .footer-license .ant-typography-link {
+  color: #1890ff !important;
+}
+
+/* 紧凑模式适配 */
+body.compact-mode .app-footer {
+  padding: 16px 12px;
+}
+
+body.compact-mode .footer-content {
+  font-size: 12px;
+}
+
+body.compact-mode .footer-main {
+  font-size: 13px;
+}
+
+body.compact-mode .footer-subtitle {
+  font-size: 12px;
+  margin-top: 6px !important;
+}
+
+body.compact-mode .footer-contact {
+  margin-top: 8px !important;
+}
+
+body.compact-mode .footer-tech {
+  margin-top: 8px !important;
+}
+
+body.compact-mode .footer-license {
+  margin-top: 6px !important;
+}
+
+/* 色弱模式适配 */
+body.color-weakness .app-footer {
+  border-top: 2px solid #1890ff !important;
+}
+
+body.color-weakness .footer-main {
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+body.color-weakness .footer-contact .ant-typography-link {
+  font-weight: bold !important;
+  text-decoration: underline !important;
+}
+
+body.color-weakness .footer-license .ant-typography-link {
+  font-weight: bold !important;
+  text-decoration: underline !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .app-footer {
+    padding: 16px 12px;
+  }
+  
+  .footer-content {
+    font-size: 12px;
+  }
+  
+  .footer-main {
+    font-size: 13px;
+  }
+  
+  .footer-contact {
+    margin-top: 8px !important;
+  }
+  
+  .footer-contact .ant-space {
+    justify-content: center;
+  }
+  
+  .footer-tech {
+    margin-top: 8px !important;
+  }
+  
+  .footer-license {
+    margin-top: 6px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-footer {
+    padding: 12px 8px;
+  }
+  
+  .footer-content {
+    font-size: 11px;
+  }
+  
+  .footer-main {
+    font-size: 12px;
+  }
+  
+  .footer-subtitle {
+    margin-top: 6px !important;
+  }
+  
+  .footer-contact {
+    margin-top: 6px !important;
+  }
+  
+  .footer-tech {
+    margin-top: 6px !important;
+  }
+  
+  .footer-license {
+    margin-top: 4px !important;
+  }
+}
+
+/* 动画效果 */
+.footer-content > div {
+  transition: all 0.3s ease;
+}
+
+.footer-content > div:hover {
+  transform: translateY(-1px);
+}
+
+/* 无动画模式 */
+body.no-animations .app-footer,
+body.no-animations .footer-content > div {
+  transition: none !important;
+}
+
+body.no-animations .footer-content > div:hover {
+  transform: none !important;
+}
+
+/* 链接悬停效果 */
+.footer-contact .ant-typography-link:hover,
+.footer-license .ant-typography-link:hover {
+  color: #40a9ff !important;
+  text-decoration: underline;
+}
+
+body[data-theme="dark"] .footer-contact .ant-typography-link:hover,
+body[data-theme="dark"] .footer-license .ant-typography-link:hover {
+  color: #40a9ff !important;
+}
+
+/* 图标样式 */
+.footer-content .anticon {
+  font-size: 12px;
+}
+
+.footer-main .anticon {
+  font-size: 14px;
+}
+
+.footer-subtitle .anticon {
+  font-size: 13px;
+}

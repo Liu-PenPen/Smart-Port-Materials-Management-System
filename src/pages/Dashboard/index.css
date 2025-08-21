@@ -1,0 +1,95 @@
+.dashboard-container {
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+}
+
+.dashboard-stats {
+  margin-bottom: 24px;
+}
+
+.dashboard-charts {
+  margin-bottom: 24px;
+}
+
+.dashboard-tables {
+  margin-bottom: 24px;
+}
+
+.dashboard-actions {
+  margin-bottom: 24px;
+}
+
+.action-card {
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-content {
+  padding: 16px;
+}
+
+.action-icon {
+  font-size: 32px;
+  color: #1890ff;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.action-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+  
+  .action-content {
+    padding: 12px;
+  }
+  
+  .action-icon {
+    font-size: 24px;
+  }
+  
+  .action-text {
+    font-size: 12px;
+  }
+}
+
+/* 统计卡片样式增强 */
+.ant-statistic-title {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.ant-statistic-content {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* 图表容器样式 */
+.ant-pro-card .ant-pro-card-body {
+  padding: 16px;
+}
+
+/* 表格样式调整 */
+.ant-table-small .ant-table-tbody > tr > td {
+  padding: 8px;
+}
+
+.ant-table-small .ant-table-thead > tr > th {
+  padding: 8px;
+  font-weight: 600;
+}

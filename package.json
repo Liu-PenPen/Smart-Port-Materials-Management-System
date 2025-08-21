@@ -1,0 +1,53 @@
+{
+  "name": "material-management-system",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "@ant-design/pro-components": "^2.6.43",
+    "@ant-design/pro-layout": "^7.17.16",
+    "@ant-design/pro-table": "^3.12.0",
+    "@ant-design/pro-form": "^2.25.1",
+    "@ant-design/pro-descriptions": "^2.6.1",
+    "@ant-design/pro-card": "^2.6.1",
+    "antd": "^5.12.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.1",
+    "echarts": "^5.4.3",
+    "echarts-for-react": "^3.0.2",
+    "dayjs": "^1.11.10",
+    "lodash-es": "^4.17.21",
+    "axios": "^1.6.2",
+    "ahooks": "^3.7.8",
+    "zustand": "^4.4.7",
+    "@tanstack/react-query": "^5.8.4",
+    "classnames": "^2.3.2",
+    "chart.js": "^4.4.0",
+    "react-chartjs-2": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@types/lodash-es": "^4.17.12",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "@vitejs/plugin-react": "^4.1.1",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@vitest/ui": "^1.0.0"
+  }
+}
