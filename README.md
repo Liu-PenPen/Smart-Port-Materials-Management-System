@@ -159,7 +159,7 @@ yarn preview
 创建 `.env.production` 文件：
 ```
 VITE_API_BASE_URL=https://api.example.com
-VITE_APP_TITLE=物资管理系统
+VITE_APP_TITLE=智慧港口物资管理系统
 ```
 
 ### Docker 部署

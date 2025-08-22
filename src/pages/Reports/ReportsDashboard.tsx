@@ -251,7 +251,7 @@ const ReportsDashboard: React.FC = () => {
           </div>
           <div className="header-ct">
             <div className="header-ct-title">
-              <span>智慧港口物资管理</span>
+              <span>智慧港口驾驶舱</span>
               <div className="header-ct-warning">
                 系统预警信息（{dashboardData?.alerts.reduce((sum, alert) => sum + alert.count, 0) || 0}条）
               </div>
