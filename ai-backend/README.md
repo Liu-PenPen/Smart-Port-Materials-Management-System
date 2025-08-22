@@ -1,8 +1,8 @@
-# 港口物资管理AI助手后端服务
+# 智慧港航AI助手
 
 ## 📋 项目简介
 
-这是港口物资管理系统的AI问答后端服务，基于FastAPI构建，提供智能查询和数据检索功能。
+基于第三方AI的港口物资管理智能问答服务，使用FastAPI构建，提供自然语言查询和智能分析功能。
 
 ## 🚀 快速开始
 
@@ -14,31 +14,18 @@
 ### 安装依赖
 
 ```bash
-# 进入后端目录
 cd ai-backend
-
-# 安装Python依赖
 pip install -r requirements.txt
-```
-
-### 配置环境
-
-```bash
-# 复制环境变量配置文件
-cp .env.example .env
-
-# 编辑配置文件（可选）
-# 注意：默认配置使用模拟数据，无需额外配置
 ```
 
 ### 启动服务
 
 ```bash
-# 启动开发服务器
+# 方式1: 使用启动脚本
 python run.py
 
-# 或者使用uvicorn直接启动
-uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+# 方式2: 直接启动
+python main.py
 ```
 
 服务启动后，访问以下地址：
@@ -93,60 +80,59 @@ GET /api/chat/status
 
 ```
 ai-backend/
-├── app/
-│   ├── api/                    # API路由
-│   │   └── chat.py            # 聊天API
-│   ├── models/                # 数据模型
-│   │   ├── chat_models.py     # 聊天相关模型
-│   │   └── data_models.py     # 业务数据模型
-│   ├── services/              # 业务服务
-│   │   ├── ai_service.py      # AI服务
-│   │   └── mock_data_service.py # 模拟数据服务
-│   ├── config.py              # 配置管理
-│   └── main.py                # 主应用
-├── requirements.txt           # Python依赖
-├── .env.example              # 环境变量示例
-└── run.py                    # 启动脚本
+├── main.py              # 主服务文件（包含所有功能）
+├── run.py               # 启动脚本
+├── requirements.txt     # Python依赖
+├── README.md           # 项目说明
+└── package.json        # 项目信息
 ```
 
-### 添加新的查询模式
+### 扩展功能
 
-在 `app/services/ai_service.py` 中的 `_init_query_patterns` 方法中添加新的模式：
+#### 修改数据源
+在 `main.py` 中修改 `MOCK_DATA` 来更新港口数据：
 
 ```python
-{
-    "pattern": r"你的正则表达式",
-    "type": QueryType.YOUR_TYPE,
-    "extractor": self._your_extractor_method
+MOCK_DATA = {
+    "materials": [
+        # 添加更多物资数据
+    ],
+    "transactions": [
+        # 添加更多交易记录
+    ]
 }
 ```
 
-### 扩展数据源
+#### 连接真实数据库
+替换模拟数据为真实数据库查询：
 
-修改 `app/services/mock_data_service.py` 或创建新的数据服务来连接真实数据库。
+```python
+def build_system_prompt() -> str:
+    real_data = get_data_from_database()
+    return f"基于以下数据回答: {real_data}"
+```
 
 ## 🔧 配置说明
 
-### 环境变量
+### AI配置
 
-| 变量名 | 说明 | 默认值 |
-|--------|------|--------|
-| `API_HOST` | API服务主机 | `0.0.0.0` |
-| `API_PORT` | API服务端口 | `8001` |
-| `DEBUG` | 调试模式 | `True` |
-| `USE_MOCK_DATA` | 使用模拟数据 | `True` |
-| `CORS_ORIGINS` | 允许的跨域源 | `["http://localhost:3000"]` |
+在 `main.py` 中的 `AI_CONFIG` 配置第三方AI服务：
 
-### 模拟数据
+```python
+AI_CONFIG = {
+    "api_key": "your_api_key_here",
+    "base_url": "https://api.chatfire.cn/v1",
+    "model": "gpt-3.5-turbo"
+}
+```
 
-当前版本使用模拟数据进行演示，包括：
+### 数据配置
 
-- 📦 物资数据（起重机、叉车、安全帽等）
-- 🏢 仓库数据（1-5号仓库、设备仓库等）
-- 📊 库存数据（随机生成的库存信息）
-- 📋 交易记录（入库、出库、移库等）
-- 🚢 码头数据（A-E码头）
-- 🏭 供应商数据
+当前使用模拟数据，包括：
+
+- 📦 8种物资（起重机、叉车、安全帽等）
+- 🏢 多个存储位置（A/B/C码头、各仓库）
+- 📋 交易记录（入库、出库操作）
 
 ## 🧪 测试
 

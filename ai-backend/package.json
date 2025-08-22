@@ -1,22 +1,18 @@
 {
-  "name": "ai-backend",
+  "name": "smart-port-ai",
   "version": "1.0.0",
-  "description": "港口物资管理AI助手后端服务",
-  "main": "run.py",
+  "description": "智慧港航AI助手",
+  "main": "main.py",
   "scripts": {
-    "start": "python run.py",
-    "dev": "python run.py",
-    "install": "pip install -r requirements.txt",
-    "test": "pytest",
-    "lint": "flake8 app/",
-    "format": "black app/"
+    "start": "python main.py",
+    "dev": "python main.py",
+    "install": "pip install -r requirements.txt"
   },
   "keywords": [
     "ai",
-    "chatbot",
     "port-management",
-    "fastapi",
-    "python"
+    "chatbot",
+    "fastapi"
   ],
   "author": "xiaohuahua",
   "license": "MIT"

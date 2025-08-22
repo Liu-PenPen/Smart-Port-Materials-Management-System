@@ -1,5 +1,0 @@
-# 最小化依赖 - 如果主requirements.txt安装失败，请使用这个
-fastapi
-uvicorn
-python-dotenv
-pydantic
