@@ -289,3 +289,175 @@ body[data-theme="dark"] .input-area .ant-input {
 body[data-theme="dark"] .message-data .ant-empty-description {
   color: #ffffff;
 }
+
+/* Markdown样式 */
+.markdown-content {
+  line-height: 1.6;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  margin: 16px 0 8px 0;
+  font-weight: 600;
+  color: #262626;
+}
+
+.markdown-content h1 {
+  font-size: 20px;
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 8px;
+}
+
+.markdown-content h2 {
+  font-size: 18px;
+}
+
+.markdown-content h3 {
+  font-size: 16px;
+}
+
+.markdown-content p {
+  margin: 8px 0;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.markdown-content li {
+  margin: 4px 0;
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid #e8e8e8;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.markdown-content th {
+  background-color: #fafafa;
+  font-weight: 600;
+}
+
+.markdown-content code {
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+
+.markdown-content pre {
+  background-color: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+.markdown-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #1890ff;
+  padding-left: 12px;
+  margin: 12px 0;
+  color: #666;
+  font-style: italic;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+}
+
+.markdown-content em {
+  font-style: italic;
+}
+
+/* 用户消息中的Markdown样式（白色主题） */
+.user-message .markdown-content h1,
+.user-message .markdown-content h2,
+.user-message .markdown-content h3,
+.user-message .markdown-content h4,
+.user-message .markdown-content h5,
+.user-message .markdown-content h6 {
+  color: #ffffff;
+}
+
+.user-message .markdown-content th {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.user-message .markdown-content td {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.user-message .markdown-content code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.user-message .markdown-content pre {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-message .markdown-content blockquote {
+  border-left-color: #ffffff;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 暗黑主题下的Markdown样式 */
+body[data-theme="dark"] .markdown-content h1,
+body[data-theme="dark"] .markdown-content h2,
+body[data-theme="dark"] .markdown-content h3,
+body[data-theme="dark"] .markdown-content h4,
+body[data-theme="dark"] .markdown-content h5,
+body[data-theme="dark"] .markdown-content h6 {
+  color: #ffffff;
+}
+
+body[data-theme="dark"] .markdown-content h1 {
+  border-bottom-color: #303030;
+}
+
+body[data-theme="dark"] .markdown-content th {
+  background-color: #1f1f1f;
+  border-color: #303030;
+  color: #ffffff;
+}
+
+body[data-theme="dark"] .markdown-content td {
+  border-color: #303030;
+  color: #ffffff;
+}
+
+body[data-theme="dark"] .markdown-content code {
+  background-color: #1f1f1f;
+  color: #ffffff;
+}
+
+body[data-theme="dark"] .markdown-content pre {
+  background-color: #1f1f1f;
+}
+
+body[data-theme="dark"] .markdown-content blockquote {
+  border-left-color: #1890ff;
+  color: #cccccc;
+}
