@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Drawer, Switch, Divider, Space, Typography, Button, Select, Radio } from 'antd'
 import { 
   SettingOutlined, 
@@ -19,6 +19,7 @@ const { Option } = Select
 interface SystemConfigDrawerProps {
   visible: boolean
   onClose: () => void
+  config?: SystemConfig
   onConfigChange: (config: SystemConfig) => void
 }
 
@@ -50,9 +51,10 @@ export interface SystemConfig {
 const SystemConfigDrawer: React.FC<SystemConfigDrawerProps> = ({
   visible,
   onClose,
+  config: initialConfig,
   onConfigChange
 }) => {
-  const [config, setConfig] = useState<SystemConfig>({
+  const [config, setConfig] = useState<SystemConfig>(initialConfig || {
     showBackground: true,
     showAnimations: true,
     showTooltips: true,
@@ -69,6 +71,13 @@ const SystemConfigDrawer: React.FC<SystemConfigDrawerProps> = ({
     realTimeUpdate: true,
     showFooter: true
   })
+
+  // 当外部config变化时更新内部状态
+  useEffect(() => {
+    if (initialConfig) {
+      setConfig(initialConfig)
+    }
+  }, [initialConfig])
 
   const handleConfigChange = (key: keyof SystemConfig, value: any) => {
     const newConfig = { ...config, [key]: value }

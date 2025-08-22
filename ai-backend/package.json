@@ -1,0 +1,23 @@
+{
+  "name": "ai-backend",
+  "version": "1.0.0",
+  "description": "港口物资管理AI助手后端服务",
+  "main": "run.py",
+  "scripts": {
+    "start": "python run.py",
+    "dev": "python run.py",
+    "install": "pip install -r requirements.txt",
+    "test": "pytest",
+    "lint": "flake8 app/",
+    "format": "black app/"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "port-management",
+    "fastapi",
+    "python"
+  ],
+  "author": "xiaohuahua",
+  "license": "MIT"
+}

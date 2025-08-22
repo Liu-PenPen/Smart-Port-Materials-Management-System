@@ -20,8 +20,9 @@ import {
   TrophyOutlined,
   SearchOutlined,
   AccountBookOutlined,
-  SmileTwoTone,
-  SkinOutlined
+  SkinOutlined,
+  QuestionCircleOutlined,
+  RobotOutlined
   
 } from '@ant-design/icons'
 import { useAuthStore } from '@/stores/authStore'
@@ -29,6 +30,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import SystemConfigDrawer, { SystemConfig } from '@/components/SystemConfigDrawer'
 import { useTheme } from '@/components/ThemeProvider'
 import Footer from '@/components/Footer'
+import AIChatModal from '@/components/AIChat/AIChatModal'
+// import AI from '/images/AI.png';
 import '@/components/SystemConfigDrawer.css'
 import '@/components/Footer.css'
 import Login from '@/pages/Login'
@@ -106,6 +109,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // 系统配置状态
   const [configDrawerVisible, setConfigDrawerVisible] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [aiChatVisible, setAiChatVisible] = useState(false)
   const [systemConfig, setSystemConfig] = useState<SystemConfig>({
     showBackground: true,
     showAnimations: true,
@@ -415,6 +419,28 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         }}>
           <div></div>
           <Space>
+            {/* AI问答 */}
+            <Tooltip title="AI问答">
+              <span
+                onClick={() => setAiChatVisible(true)}
+                style={{
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '4px 8px',
+                  borderRadius: '6px',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#f0f0f0'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent'
+                }}
+              >
+                <RobotOutlined style={{ fontSize: 20, color: '#1890ff' }}/>
+              </span>
+            </Tooltip>
             {/* 系统配置按钮 */}
             <Tooltip title="系统配置">
               <span
@@ -469,7 +495,14 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <SystemConfigDrawer
         visible={configDrawerVisible}
         onClose={() => setConfigDrawerVisible(false)}
+        config={systemConfig}
         onConfigChange={handleConfigChange}
+      />
+
+      {/* AI聊天模态框 */}
+      <AIChatModal
+        visible={aiChatVisible}
+        onClose={() => setAiChatVisible(false)}
       />
     </Layout>
   )
