@@ -438,7 +438,8 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   e.currentTarget.style.background = 'transparent'
                 }}
               >
-                <RobotOutlined style={{ fontSize: 20, color: '#1890ff' }}/>
+                <span style={{ fontSize: 20 }}>🤖</span>
+                {/* <RobotOutlined style={{ fontSize: 20, color: '#1890ff' }}/> */}
               </span>
             </Tooltip>
             {/* 系统配置按钮 */}

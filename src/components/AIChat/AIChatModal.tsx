@@ -5,14 +5,13 @@ import {
 } from 'antd'
 import {
   SendOutlined,
-  RobotOutlined,
   UserOutlined,
   ClearOutlined,
-  QuestionCircleOutlined,
   ThunderboltOutlined
 } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import type { Components } from 'react-markdown'
 import './AIChatModal.css'
 
 const { Text, Paragraph } = Typography
@@ -24,6 +23,11 @@ interface ChatMessage {
   content: string
   timestamp: Date
   data?: any
+  chartData?: {
+    image: string
+    title: string
+    type: string
+  }
 }
 
 interface InspectionItem {
@@ -91,7 +95,28 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
       const welcomeMessage: ChatMessage = {
         id: generateMessageId(),
         role: 'assistant',
-        content: `您好！我是智慧港航物资管理AI助手，可以帮您查询库存、物资信息、智能巡检等。请问有什么可以帮助您的吗？`,
+        content: `您好！我是智慧港航物资管理AI助手，现在支持以下功能：
+
+## 🤖 AI智能分析
+- 基于 PandasAI 的智能数据分析
+- 专业的物资管理建议和洞察
+- 支持复杂查询，如"给我一些物资管理的建议"
+
+## 🔍 智能巡检
+- 全区域巡检、仓库专项巡检
+- 设备安全巡检、码头环境巡检
+
+## 📊 数据分析 & 图表可视化
+- 库存统计分析、趋势分析
+- 异常数据分析、价值分布分析
+- 支持图表生成：柱状图、饼图、折线图、直方图
+- 支持自然语言查询，如"生成各区域物资数量的柱状图"
+
+## 💬 智能对话
+- 物资信息查询、库存管理咨询
+- 操作指导、问题解答
+
+您可以直接输入问题或点击下方快捷按钮开始使用！`,
         timestamp: new Date()
       }
       setMessages([welcomeMessage])
@@ -104,6 +129,51 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
 
   const generateMessageId = () => {
     return 'msg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11)
+  }
+
+  //Markdown 组件
+  const markdownComponents: Components = {
+    img: ({ src, alt, title }) => {
+      return (
+        <span style={{ display: 'block', margin: '16px 0', textAlign: 'center' }}>
+          <img
+            src={src}
+            alt={alt}
+            title={title}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+              borderRadius: '8px',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+              border: '1px solid #f0f0f0',
+              display: 'block',
+              margin: '0 auto'
+            }}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+            onLoad={() => {
+              console.log('图片加载成功:', src?.substring(0, 50) + '...');
+            }}
+          />
+          {title && (
+            <span style={{
+              display: 'block',
+              marginTop: '8px',
+              fontSize: '14px',
+              color: '#666',
+              fontStyle: 'italic'
+            }}>
+              {title}
+            </span>
+          )}
+        </span>
+      )
+    },
+    // 修复段落问题
+    p: ({ children }) => {
+      return <div style={{ marginBottom: '16px' }}>{children}</div>
+    }
   }
 
   // 智能巡检功能
@@ -350,12 +420,102 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
         }
       ]
 
-      // 合并原有快捷操作和巡检操作
-      setQuickActions([...actions, ...inspectionActions])
+      // 添加数据分析快捷操作
+      const analysisActions: QuickAction[] = [
+        {
+          id: 'analysis_inventory',
+          title: '📊 库存统计',
+          description: '统计各区域的库存情况',
+          query: '统计各区域的物资库存数量'
+        },
+        {
+          id: 'analysis_trend',
+          title: '📈 趋势分析',
+          description: '分析最近的物资流动趋势',
+          query: '分析最近30天的物资流动趋势'
+        },
+        {
+          id: 'analysis_abnormal',
+          title: '⚠️ 异常分析',
+          description: '查看异常状态的记录',
+          query: '分析异常状态的记录和原因'
+        },
+        {
+          id: 'analysis_value',
+          title: '💰 价值分析',
+          description: '分析物资总价值分布',
+          query: '分析各类物资的总价值分布'
+        }
+      ]
+
+      // 添加 AI 智能分析快捷操作
+      const aiActions: QuickAction[] = [
+        {
+          id: 'ai_advice',
+          title: '🤖 管理建议',
+          description: 'AI 提供专业的物资管理建议',
+          query: '给我一些物资管理的建议'
+        },
+        {
+          id: 'ai_focus',
+          title: '🎯 重点关注',
+          description: 'AI 分析需要重点关注的物资',
+          query: '哪些物资需要重点关注？'
+        },
+        {
+          id: 'ai_optimize',
+          title: '⚡ 优化建议',
+          description: 'AI 提供物资配置优化方案',
+          query: '如何优化物资配置？'
+        },
+        {
+          id: 'ai_risk',
+          title: '⚠️ 风险分析',
+          description: 'AI 分析潜在风险和解决方案',
+          query: '分析当前物资管理的潜在风险'
+        }
+      ]
+
+      // 添加图表分析快捷操作
+      const chartActions: QuickAction[] = [
+        {
+          id: 'chart_area',
+          title: '📊 区域图表',
+          description: '生成各区域物资数量柱状图',
+          query: '生成各区域物资数量的柱状图'
+        },
+        {
+          id: 'chart_material',
+          title: '🥧 物资饼图',
+          description: '生成物资类型分布饼图',
+          query: '生成物资类型分布的饼图'
+        },
+        {
+          id: 'chart_trend',
+          title: '📈 趋势图表',
+          description: '生成操作趋势折线图',
+          query: '生成每日操作趋势的折线图'
+        },
+        {
+          id: 'chart_value',
+          title: '💹 价值分布',
+          description: '生成物资价值分布直方图',
+          query: '生成物资价值分布图'
+        }
+      ]
+
+      // 合并所有快捷操作：原有操作、巡检操作、数据分析操作、AI操作、图表操作
+      setQuickActions([...actions, ...inspectionActions, ...analysisActions, ...aiActions, ...chartActions])
     } catch (error) {
       console.error('加载快捷操作失败:', error)
-      // 如果网络请求失败，至少提供巡检快捷操作
+      // 如果网络请求失败，至少提供核心功能的快捷操作
       const fallbackActions: QuickAction[] = [
+        {
+          id: 'ai_advice',
+          title: '🤖 管理建议',
+          description: 'AI 提供专业的物资管理建议',
+          query: '给我一些物资管理的建议'
+        },
         {
           id: 'inspection_all',
           title: '🔍 全区域巡检',
@@ -363,10 +523,16 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
           query: '请进行全区域智能巡检'
         },
         {
-          id: 'inspection_warehouse',
-          title: '📦 仓库巡检',
-          description: '对仓库区域进行专项巡检',
-          query: '请对仓库区域进行巡检'
+          id: 'analysis_inventory',
+          title: '📊 库存统计',
+          description: '统计各区域的库存情况',
+          query: '统计各区域的物资库存数量'
+        },
+        {
+          id: 'chart_area',
+          title: '📊 区域图表',
+          description: '生成各区域物资数量柱状图',
+          query: '生成各区域物资数量的柱状图'
         }
       ]
       setQuickActions(fallbackActions)
@@ -398,6 +564,22 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
           role: 'assistant',
           content: report,
           timestamp: new Date()
+        }
+
+        setMessages(prev => [...prev, assistantMessage])
+        return
+      }
+
+      // 检查是否是数据分析请求
+      if (isDataAnalysisRequest(message)) {
+        const analysisResult = await performDataAnalysis(message)
+
+        const assistantMessage: ChatMessage = {
+          id: generateMessageId(),
+          role: 'assistant',
+          content: analysisResult.content,
+          timestamp: new Date(),
+          chartData: analysisResult.chartData
         }
 
         setMessages(prev => [...prev, assistantMessage])
@@ -458,6 +640,126 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
     return foundArea
   }
 
+  // 检查是否是数据分析请求
+  const isDataAnalysisRequest = (message: string): boolean => {
+    const analysisKeywords = [
+      '分析', '统计', '查询', '报告', '趋势', '对比', '汇总',
+      '最多', '最少', '平均', '总计', '排行', '排名', '占比',
+      '库存', '物资', '数据', '图表', '可视化'
+    ]
+    return analysisKeywords.some(keyword =>
+      message.toLowerCase().includes(keyword.toLowerCase())
+    )
+  }
+
+  // 执行数据分析
+  const performDataAnalysis = async (query: string): Promise<{content: string, chartData?: any}> => {
+    try {
+      const response = await fetch('http://localhost:5000/api/data/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: query
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('数据分析服务不可用')
+      }
+
+      const result = await response.json()
+
+      if (result.success) {
+        const formattedContent = formatAnalysisResult(result)
+        const chartData = result.has_chart && result.chart_data ? {
+          image: result.chart_data.image,
+          title: result.chart_data.title,
+          type: result.chart_data.type
+        } : undefined
+
+        return { content: formattedContent, chartData }
+      } else {
+        return { content: `数据分析遇到问题：${result.error}` }
+      }
+    } catch (error) {
+      console.error('数据分析失败:', error)
+      return { content: `抱歉，数据分析服务暂时不可用。请稍后重试。\n\n您可以尝试以下查询：\n- "统计各区域的物资数量"\n- "分析最近的库存趋势"\n- "查看异常状态的记录"` }
+    }
+  }
+
+  // 格式化分析结果
+  const formatAnalysisResult = (result: any): string => {
+    const { result: analysisResult, query, data_summary, analysis_type, has_chart, chart_data } = result
+    const chart = chart_data 
+
+    let formattedResult = `## 📊 数据分析结果\n\n`
+    formattedResult += `**查询**: ${query}\n`
+    if (analysis_type) {
+      formattedResult += `**分析类型**: ${analysis_type}\n`
+    }
+    if (has_chart && chart) {
+      formattedResult += `**图表**: 已生成 ${getChartTypeName(chart.type)}\n\n`
+    } else {
+      formattedResult += `\n`
+    }
+
+    if (typeof analysisResult === 'string') {
+      formattedResult += `**结果**: ${analysisResult}\n\n`
+    } else if (typeof analysisResult === 'object') {
+      formattedResult += `**结果**: \n\`\`\`json\n${JSON.stringify(analysisResult, null, 2)}\n\`\`\`\n\n`
+    } else {
+      formattedResult += `**结果**: ${String(analysisResult)}\n\n`
+    }
+
+    if (data_summary) {
+      formattedResult += `### 📋 数据概览\n`
+      formattedResult += `- 总记录数: ${data_summary.total_records}\n`
+      formattedResult += `- 数据时间范围: ${data_summary.date_range}\n`
+      formattedResult += `- 物资种类: ${data_summary.materials_count}\n`
+      formattedResult += `- 区域数量: ${data_summary.areas_count}\n\n`
+    }
+
+    formattedResult += `💡 **提示**: 您可以继续询问更多数据分析问题，比如：\n`
+    formattedResult += `- "显示各区域的物资分布"\n`
+    formattedResult += `- "分析异常状态的原因"\n`
+    formattedResult += `- "统计最近一周的操作记录"`
+
+    // 如果有图表，添加图表显示
+    if (has_chart && chart) {
+      if (chart.data === 'text_chart' && chart.text_chart) {
+        formattedResult += `\n### 📊 ${chart.title}\n\n\`\`\`\n${chart.text_chart}\`\`\`\n\n`
+      } else if (chart.image) {
+        // 先添加标题和说明文字
+        formattedResult += `\n### 📈 ${chart.title}\n\n`
+        formattedResult += `> 💡 **图表说明**: 这是基于您的数据生成的专业可视化图表，支持高清显示和详细数据标注。\n\n`
+      } else if (chart.data && chart.data !== 'text_chart') {
+        // 兼容旧格式
+        formattedResult += `\n### 📈 ${chart.title}\n\n![${chart.title || '数据图表'}](data:image/png;base64,${chart.data})\n\n`
+        formattedResult += `> 💡 **图表说明**: 这是基于您的数据生成的专业可视化图表，支持高清显示和详细数据标注。\n\n`
+      } else {
+ 
+      }
+    } else {
+      console.log('❌ 没有图表数据或 has_chart 为 false')
+    }
+
+    return formattedResult
+  }
+
+  // 获取图表类型中文名称
+  const getChartTypeName = (type: string): string => {
+    const typeNames = {
+      'bar': '柱状图',
+      'pie': '饼图',
+      'line': '折线图',
+      'scatter': '散点图',
+      'hist': '直方图'
+    }
+    return typeNames[type as keyof typeof typeNames] || '图表'
+  }
+
   const handleSend = () => {
     sendMessage(inputValue)
   }
@@ -483,7 +785,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
     return (
       <div key={message.id} className={`message ${isUser ? 'user-message' : 'assistant-message'}`}>
         <div className="message-avatar">
-          {isUser ? <UserOutlined /> : <RobotOutlined />}
+          {isUser ? <UserOutlined /> : <span>🤖</span>}
         </div>
         <div className="message-content">
           <div className="message-bubble">
@@ -492,7 +794,10 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
                 <Paragraph>{message.content}</Paragraph>
               ) : (
                 <div className="markdown-content">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={markdownComponents}
+                  >
                     {message.content}
                   </ReactMarkdown>
                 </div>
@@ -501,6 +806,27 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
             {message.data && (
               <div className="message-data">
                 {renderMessageData(message.data)}
+              </div>
+            )}
+            {message.chartData && (
+              <div className="message-chart" style={{ margin: '16px 0', textAlign: 'center' }}>
+                <img
+                  src={message.chartData.image}
+                  alt={message.chartData.title}
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid #f0f0f0'
+                  }}
+                  onError={(e) => {
+                    console.error('图表图片加载失败:', message.chartData?.image?.substring(0, 100));
+                  }}
+                  onLoad={() => {
+                    console.log('图表图片加载成功:', message.chartData?.title);
+                  }}
+                />
               </div>
             )}
           </div>
@@ -571,7 +897,8 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
     <Modal
       title={
         <Space>
-          <RobotOutlined style={{ color: '#1890ff' }} />
+          {/* <RobotOutlined style={{ color: '#1890ff' }} /> */}
+          🤖
           <span>智慧港航AI智能助手</span>
         </Space>
       }
@@ -611,7 +938,8 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ visible, onClose }) => {
           {loading && (
             <div className="message assistant-message">
               <div className="message-avatar">
-                <RobotOutlined />
+                {/* <RobotOutlined /> */}
+                🤖
               </div>
               <div className="message-content">
                 <div className="message-bubble">

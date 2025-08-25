@@ -1,7 +1,7 @@
 /* AI聊天模态框样式 */
 .ai-chat-modal .ant-modal-body {
   padding: 0;
-  height: 600px;
+  height: 700px;
   display: flex;
   flex-direction: column;
 }
@@ -56,7 +56,7 @@
 }
 
 .assistant-message .message-avatar {
-  background: #52c41a;
+  background: #ccc;
   color: white;
 }
 
